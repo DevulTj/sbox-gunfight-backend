@@ -26,7 +26,7 @@ public class MatchHistoryController : BaseController
 	}
 
 	[HttpGet( "{steamId}" )]
-	public IEnumerable<Match.WithPlayers> GetForId( long steamId )
+	public IEnumerable<Match.WithPlayers> GetForId( string steamId )
 	{
 		return Service.GetForPlayer( steamId );
 	}

@@ -12,7 +12,7 @@ public class PlayerLoadout
     public Guid LoadoutId { get; set; }
 
     [Key]
-    public long SteamId { get; set; }
+    public string SteamId { get; set; }
    
     public Weapon Primary { get; set; }
     public Weapon Secondary { get; set; }

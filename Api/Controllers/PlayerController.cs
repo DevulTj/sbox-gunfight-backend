@@ -18,7 +18,7 @@ public class PlayerController : BaseController
     }
 
     [HttpGet( "{steamId}" )]
-    public Player GetPlayer( long steamId )
+    public Player GetPlayer( string steamId )
     {
         return Service.GetById( steamId );
     }
@@ -32,7 +32,7 @@ public class PlayerController : BaseController
 
 	[Auth.UseAuthenticatedSteamId]
     [Auth.RequireToken]
-    [HttpPut]
+    [HttpPost]
     public Player UpdatePlayer( Player.UpdateRequest request )
     {
         return Service.Update( SteamId, request );
@@ -40,18 +40,9 @@ public class PlayerController : BaseController
 
 	[Auth.UseAuthenticatedSteamId]
 	[Auth.RequireToken]
-    [HttpPost]
-    public Player Create()
-    {
-        return Service.Create( SteamId );
-    }
-
-	[Auth.UseAuthenticatedSteamId]
-	[Auth.RequireToken]
-	[HttpPut( "xp" )]
-	public Player GiveXP( ulong amount )
+	[HttpPost( "xp" )]
+	public Player GiveXP( Player.GiveExperienceRequest request )
 	{
-		return Service.GiveExperience( SteamId, amount );
+		return Service.GiveExperience( SteamId, request.Experience );
 	}
-
 }

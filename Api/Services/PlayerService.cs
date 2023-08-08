@@ -7,12 +7,12 @@ namespace Api.Services;
 public interface IPlayerService
 {
     IEnumerable<Player> GetAll();
-    Player GetById( long steamId );
-    Player Create( long steamId );
-    Player Update( long steamId, Player.UpdateRequest request );
-    bool Delete( long steamId );
-	Player GetOrCreate( long steamId );
-	Player GiveExperience( long steamId, ulong xpAmount );
+    Player GetById( string steamId );
+    Player Create( string steamId );
+    Player Update( string steamId, Player.UpdateRequest request );
+    bool Delete( string steamId );
+	Player GetOrCreate( string steamId );
+	Player GiveExperience( string steamId, ulong xpAmount );
 }
 
 public partial class PlayerService : IPlayerService
@@ -24,7 +24,7 @@ public partial class PlayerService : IPlayerService
 		Db = db;
 	}
 
-	public Player Create( long steamId )
+	public Player Create( string steamId )
 	{
 		var player = new Player( steamId )
         {
@@ -38,7 +38,7 @@ public partial class PlayerService : IPlayerService
 		return player;
 	}
 
-	public bool Delete( long steamId )
+	public bool Delete( string steamId )
 	{
 		var player = GetById( steamId );
 		if ( player == null ) return false;
@@ -54,38 +54,41 @@ public partial class PlayerService : IPlayerService
 		return Db.Players.AsEnumerable();
 	}
 
-	public Player GetById( long steamId )
+	public Player GetById( string steamId )
 	{
-		return Db.Players.FirstOrDefault( x => x.SteamId == steamId );
+		return Db.Players.FirstOrDefault( x => x.SteamId.Equals( steamId ) );
 	}
 
-	public Player Update( long steamId, Player.UpdateRequest request )
+	public Player Update( string steamId, Player.UpdateRequest request )
 	{
-		var player = GetById( steamId );
+		var pl = GetById( steamId );
 
 		// Request
-		player.Experience = request.Experience;
+		pl.Experience = request.Experience;
+		pl.MarkAsUpdated();
+
+		Db.Update( pl );
 
 		Db.SaveChanges();
 
-		return player;
+		return pl;
 	}
 
-	public Player GetOrCreate( long steamId )
+	public Player GetOrCreate( string steamId )
 	{
-		if ( GetById( steamId ) is not Player player )
-		{
-			return Create( steamId );
-		}
+		var player = Db.Players.FirstOrDefault( x => x.SteamId.Equals( steamId ) );
+		if ( player == null ) player = Create( steamId );
 
 		return player;
 	}
 
-	public Player GiveExperience( long steamId, ulong xpAmount )
+	public Player GiveExperience( string steamId, ulong xpAmount )
 	{
 		var pl = GetOrCreate( steamId );
 		pl.Experience += xpAmount;
+		pl.MarkAsUpdated();
 
+		Db.Update( pl );
 		Db.SaveChanges();
 
 		return pl;

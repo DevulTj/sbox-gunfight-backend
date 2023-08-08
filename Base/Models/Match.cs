@@ -11,7 +11,7 @@ public class Match
     public Guid Id { get; set; }
 
 	[Required]
-    public ulong ServerSteamId { get; set; }
+    public string ServerSteamId { get; set; }
 
 	[Required]
 	public string MapIdent { get; set; }
@@ -51,7 +51,7 @@ public class TimeSpanConverter : System.Text.Json.Serialization.JsonConverter<Ti
 
 public struct MatchSubmitRequest
 {
-	public ulong ServerSteamId { get; set; }
+	public string ServerSteamId { get; set; }
 	public string MapIdent { get; set; }
 	public string GamemodeIdent { get; set; }
 
@@ -69,7 +69,7 @@ public class MatchPlayer : BaseModel
 	[ForeignKey( "MatchId" )] public Match Match { get; set; }
 
 	[Key]
-    public long PlayerSteamId { get; set; }
+    public string PlayerSteamId { get; set; }
 
 	[NotMapped]
 	public Dictionary<string, string> KeyValues { get; set; }
@@ -84,6 +84,6 @@ public class MatchPlayer : BaseModel
 
 public struct MatchPlayerSubmitRequest
 {
-	public long PlayerSteamId { get; set; }
+	public string PlayerSteamId { get; set; }
 	public Dictionary<string, string> KeyValues { get; set; }
 }

@@ -6,7 +6,7 @@ namespace Api.Services;
 
 public interface IMatchService
 {
-	IEnumerable<Match.WithPlayers> GetForPlayer( long steamId );
+	IEnumerable<Match.WithPlayers> GetForPlayer( string steamId );
 	IEnumerable<Match.WithPlayers> GetAll( int take = 100, int skip = 0 );
 
 	bool Submit( MatchSubmitRequest request );
@@ -47,7 +47,7 @@ public partial class MatchService : IMatchService
 		return matchesWithPlayers;
 	}
 
-	public IEnumerable<Match.WithPlayers> GetForPlayer( long steamId )
+	public IEnumerable<Match.WithPlayers> GetForPlayer( string steamId )
 	{
 		var matches = Db.MatchPlayers
 			.AsQueryable()
