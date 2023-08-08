@@ -1,5 +1,6 @@
 using Api.Services;
 using Base;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddOptions();
-builder.Services.AddDbContext<DatabaseContext>( ServiceLifetime.Scoped );
+
+if ( builder.Environment.IsDevelopment() )
+{
+	builder.Configuration.AddEnvironmentVariables().AddJsonFile( "appsettings.Development.json" );
+	DatabaseContext.ConnectionString = builder.Configuration.GetConnectionString( "AZURE_SQL_CONNECTIONSTRING" );
+}
+else
+{
+	DatabaseContext.ConnectionString = Environment.GetEnvironmentVariable( "AZURE_SQL_CONNECTIONSTRING" );
+}
+
+builder.Services.AddDbContext<DatabaseContext>( ServiceLifetime.Scoped, ServiceLifetime.Scoped );
 
 // Services
 builder.Services.AddScoped<IPlayerService, PlayerService>();

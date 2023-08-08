@@ -19,14 +19,12 @@ public class MatchHistoryController
 		Console.WriteLine( $"MatchHistoryController {service}" );
 	}
 
-	[Auth.RequireToken]
 	[HttpGet]
 	public IEnumerable<Match.WithPlayers> Get()
 	{
 		return Service.GetAll();
 	}
 
-	[Auth.RequireToken]
 	[HttpGet( "{steamId}" )]
 	public IEnumerable<Match.WithPlayers> GetForId( long steamId )
 	{

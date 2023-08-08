@@ -12,16 +12,11 @@ public class DatabaseContext : DbContext
     public DbSet<Models.MatchPlayer> MatchPlayers { get; set; }
 
 
-	string SqlConnectionString => @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=gunfight-local;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+	public static string ConnectionString;
 
     protected override void OnConfiguring( DbContextOptionsBuilder options )
     {
-        Console.WriteLine("ApiDatabaseContext -> OnConfiguring");
-
-		options.UseSqlServer( SqlConnectionString )
-			.LogTo( Console.WriteLine, LogLevel.Information )
-			.EnableSensitiveDataLogging()
-			.EnableDetailedErrors();
+		options.UseSqlServer( ConnectionString );
 	}
 
     protected override void OnModelCreating( ModelBuilder modelBuilder )
