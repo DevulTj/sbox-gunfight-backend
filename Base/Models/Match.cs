@@ -11,7 +11,7 @@ public class Match
     public Guid Id { get; set; }
 
 	[Required]
-    public long ServerSteamId { get; set; }
+    public ulong ServerSteamId { get; set; }
 
 	[Required]
 	public string MapIdent { get; set; }
@@ -51,7 +51,7 @@ public class TimeSpanConverter : System.Text.Json.Serialization.JsonConverter<Ti
 
 public struct MatchSubmitRequest
 {
-	public long ServerSteamId { get; set; }
+	public ulong ServerSteamId { get; set; }
 	public string MapIdent { get; set; }
 	public string GamemodeIdent { get; set; }
 
