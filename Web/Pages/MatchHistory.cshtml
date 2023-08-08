@@ -1,0 +1,39 @@
+﻿@page
+@model MatchHistoryModel
+@{
+    ViewData["Title"] = "History";
+}
+
+<div class="text-center">
+    <label class="label header">Latest Matches</label>
+
+    <div class="matches">
+        @foreach ( var e in Model.Service.GetAll() )
+        {
+            <div class="card">
+                <div class="row"><i>my_location</i>@e.Match.MapIdent</div>
+                <div class="row"><i>schedule</i>@e.Match.StartTime.ToString( "dddd, dd MMMM yyyy" )</div>
+                <div class="row"><i>timer</i>@(e.Match.EndTime - e.Match.StartTime)</div>
+                <div class="row"><i>group</i>@e.Players.Count() players</div>
+
+                @foreach ( var player in e.Players.OrderByDescending( x => x.KeyValues["kills"] ) )
+                {
+                    <div class="row">
+                        <i>person</i>
+                        <label>@player.PlayerSteamId</label>
+
+                        <div class="kv">
+                            @foreach ( var kv in player.KeyValues )
+                            {
+                                <div class="stat">
+                                    <i>@Model.GetIcon(kv.Key)</i>    
+                                    @kv.Value
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

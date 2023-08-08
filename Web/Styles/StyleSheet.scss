@@ -1,0 +1,54 @@
+﻿@import "Theme.scss";
+@import "Blazor.scss";
+@import "Navigation.scss";
+@import "Card.scss";
+
+html, page
+{
+    top: 0;
+    left: 0;
+    height: 100%;
+
+    background-color: $background-color;
+    font-family: $alternate-font;
+    color: white;
+}
+
+body
+{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+main
+{
+    padding: 32px;
+}
+
+footer
+{
+    background-color: rgba( $theme-color, 0.2 );
+    padding: 16px;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+i
+{
+    font-family: Material Symbols Outlined;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.label
+{
+    &.header
+    {
+        font-family: Quantico;
+        font-weight: 800;
+        font-size: 20px;
+    }
+}

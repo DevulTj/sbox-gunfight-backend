@@ -1,0 +1,32 @@
+﻿.nav-bar
+{
+    padding: 16px;
+    gap: 32px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    background-image: linear-gradient( to bottom, $theme-color, darken( $theme-color, 5% ) );
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px;
+
+    a
+    {
+        text-decoration: none;
+    }
+
+    .nav-brand
+    {
+        font-family: $header-font;
+        font-weight: 900;
+        color: white;
+        font-size: 24px;
+    }
+
+    .nav-item
+    {
+        font-family: $main-font;
+        color: white;
+        font-size: 16px;
+        padding: 4px;
+    }
+}
