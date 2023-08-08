@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Base;
 
@@ -11,15 +10,6 @@ public class DatabaseContext : DbContext
 
     public DbSet<Models.Match> MatchHistory { get; set; }
     public DbSet<Models.MatchPlayer> MatchPlayers { get; set; }
-
-    public string DbPath { get; }
-
-    public DatabaseContext()
-    {
-        DbPath = "Database.db";
-
-        Console.WriteLine("Instantiating ApiDatabaseContext");
-    }
 
 
 	string SqlConnectionString => @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=gunfight-local;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
