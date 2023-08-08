@@ -11,6 +11,8 @@ public interface IPlayerService
     Player Create( long steamId );
     Player Update( long steamId, Player.UpdateRequest request );
     bool Delete( long steamId );
+	Player GetOrCreate( long steamId );
+	Player GiveExperience( long steamId, ulong xpAmount );
 }
 
 public partial class PlayerService : IPlayerService
@@ -67,5 +69,25 @@ public partial class PlayerService : IPlayerService
 		Db.SaveChanges();
 
 		return player;
+	}
+
+	public Player GetOrCreate( long steamId )
+	{
+		if ( GetById( steamId ) is not Player player )
+		{
+			return Create( steamId );
+		}
+
+		return player;
+	}
+
+	public Player GiveExperience( long steamId, ulong xpAmount )
+	{
+		var pl = GetOrCreate( steamId );
+		pl.Experience += xpAmount;
+
+		Db.SaveChanges();
+
+		return pl;
 	}
 }
