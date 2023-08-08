@@ -8,7 +8,7 @@ namespace Api.Controllers;
 
 [ApiController]
 [Route( "api/[controller]" )]
-public class MatchHistoryController
+public class MatchHistoryController : BaseController
 {
 	private IMatchService Service;
 

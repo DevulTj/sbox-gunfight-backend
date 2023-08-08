@@ -8,7 +8,7 @@ namespace Api.Controllers
 {
     [ApiController]
     [Route( "api/[controller]") ]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseController
     {
         private static System.Net.Http.HttpClient Http;
 

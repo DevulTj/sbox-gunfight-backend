@@ -6,7 +6,7 @@ namespace Api.Controllers;
 
 [ApiController]
 [Route( "api/[controller]" )]
-public class PlayerController
+public class PlayerController : BaseController
 {
     private IPlayerService Service;
 
@@ -30,17 +30,28 @@ public class PlayerController
     }
 
 
+	[Auth.UseAuthenticatedSteamId]
     [Auth.RequireToken]
     [HttpPut]
-    public Player UpdatePlayer( long steamId, Player.UpdateRequest request )
+    public Player UpdatePlayer( Player.UpdateRequest request )
     {
-        return Service.Update( steamId, request );
+        return Service.Update( SteamId, request );
     }
 
-    [Auth.RequireToken]
+	[Auth.UseAuthenticatedSteamId]
+	[Auth.RequireToken]
     [HttpPost]
-    public Player Create( long steamId )
+    public Player Create()
     {
-        return Service.Create( steamId );
+        return Service.Create( SteamId );
     }
+
+	[Auth.UseAuthenticatedSteamId]
+	[Auth.RequireToken]
+	[HttpPut( "xp" )]
+	public Player GiveXP( ulong amount )
+	{
+		return Service.GiveExperience( SteamId, amount );
+	}
+
 }

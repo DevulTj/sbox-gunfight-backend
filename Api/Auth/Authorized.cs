@@ -98,3 +98,23 @@ public class RequireTokenAttribute : Attribute, IAsyncActionFilter
 		}
 	}
 }
+
+[AttributeUsage( validOn: AttributeTargets.Class | AttributeTargets.Method )]
+public class UseAuthenticatedSteamIdAttribute : Attribute, IAsyncActionFilter
+{
+	public async Task OnActionExecutionAsync( ActionExecutingContext context, ActionExecutionDelegate next )
+	{
+		if ( !context.HttpContext.Request.Headers.TryGetValue( "X-Auth-Id", out var steamId ) )
+		{
+			context.Result = new ContentResult()
+			{
+				StatusCode = 401,
+				Content = "No SteamId was passed in this request."
+			};
+
+			return;
+		}
+
+		next();
+	}
+}
