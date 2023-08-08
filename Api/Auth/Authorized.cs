@@ -68,10 +68,6 @@ public class RequireTokenAttribute : Attribute, IAsyncActionFilter
 
 	public static async Task<long> ValidateToken( long steamId, string token )
 	{
-		Console.WriteLine( $"Validating Token: {steamId}, {token}" );
-
-		token = "b49ab8de-a69b-4104-a76a-a4a78d6b81b1";
-
 		try
 		{
 			Http ??= new()
